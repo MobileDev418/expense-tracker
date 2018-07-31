@@ -2,7 +2,7 @@
 
 ## How to install
 
-- Install MongoDB and start Server
+- Install MongoDB and start Service
 ```
 brew install mongodb
 brew services start mongodb
