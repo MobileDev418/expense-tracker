@@ -2,25 +2,56 @@ extends layout
 
 block content
   .pb-2.mt-2.mb-4.border-bottom
-    h3 Contact Form
+    h3 Expense
 
-  form(method='POST')
+  form(action='/account/profile', method='POST')
     input(type='hidden', name='_csrf', value=_csrf)
     if (unknownUser)
-      .form-group.row
-        label(class='col-md-2 col-form-label font-weight-bold', for='name') Name
-        .col-md-8
-          input.form-control(type='text', name='name', id='name', autofocus=true)
-      .form-group.row
-        label(class='col-md-2 col-form-label font-weight-bold', for='email') Email
-        .col-md-8
-          input.form-control(type='text', name='email', id='email')
+      li.nav-item(class=(title === 'Login') ? 'active' : undefined)
+        a.nav-link(href='/login') Login
     .form-group.row
-      label(class='col-md-2 col-form-label font-weight-bold', for='message') Please describe the issue or your suggestion
-      .col-md-8
-        textarea.form-control(name='message', id='message', rows='7', autofocus=(!unknownUser).toString())
+      label.col-md-3.col-form-label.font-weight-bold.text-right(for='email') Date
+      .col-md-7
+        input.form-control(type='email', name='email', id='email', value=user.email)
+    .form-group.row
+      label.col-md-3.col-form-label.font-weight-bold.text-right(for='name') Time
+      .col-md-7
+        input.form-control(type='text', name='name', id='name', value=user.profile.name)
+    .form-group.row
+      label.col-md-3.col-form-label.font-weight-bold.text-right(for='name') Description
+      .col-md-7
+        input.form-control(type='text', name='name', id='name', value=user.profile.name)
+    .form-group.row
+      label.col-md-3.col-form-label.font-weight-bold.text-right(for='name') Amount
+      .col-md-7
+        input.form-control(type='text', name='name', id='name', value=user.profile.name)                
+    .form-group.row
+      label.col-md-3.col-form-label.font-weight-bold.text-right(for='name') Comment
+      .col-md-7
+        input.form-control(type='text', name='name', id='name', value=user.profile.name)        
+    .form-group.row
+      label.col-md-3.col-form-label.font-weight-bold.text-right Gender
+      .col-sm-6
+        label.radio.col-sm-3
+          input(type='radio', checked=user.profile.gender=='male', name='gender', value='male', data-toggle='radio')
+          span Male
+        label.radio.col-sm-3
+          input(type='radio', checked=user.profile.gender=='female', name='gender', value='female', data-toggle='radio')
+          span Female
+        label.radio.col-sm-3
+          input(type='radio', checked=user.profile.gender=='other', name='gender', value='other', data-toggle='radio')
+          span Other
+    .form-group.row
+      label.col-md-3.col-form-label.font-weight-bold.text-right(for='location') Location
+      .col-md-7
+        input.form-control(type='text', name='location', id='location', value=user.profile.location)
+    .form-group.row
+      label.col-md-3.col-form-label.font-weight-bold.text-right(for='website') Website
+      .col-md-7
+        input.form-control(type='text', name='website', id='website', value=user.profile.website)
     .form-group
-      .offset-md-2.col-md-8.p-1
-        button.btn.btn-primary(type='submit')
-          i.far.fa-envelope.fa-sm
-          | Send
+      .offset-sm-3.col-md-7.pl-2
+        button.btn.btn.btn-primary(type='submit')
+          i.fas.fa-pencil-alt.fa-sm
+          | Update Profile
+

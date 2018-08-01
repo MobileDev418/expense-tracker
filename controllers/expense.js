@@ -1,26 +1,26 @@
 const User = require('../models/User');
+const Expense = require('../models/Expense');
 
 /**
  * GET /
  * Expense page.
  */
-
+exports.getCash = (req, res) => {
+  res.render('account/profile', {
+    title: 'Account Management'
+  });
+};
 
 
 
  /**
   * GET /account
-  * Profile page.
+  * Expense page.
   */
  exports.getExpense = (req, res) => {
-
-   console.log('get Expense');
-   res.render('home', {
-     title: 'Home'
+   res.render('expense', {
+     title: 'Expense'
    });
-   // res.render('account/profile', {
-   //   title: 'Account Management'
-   // });
  };
 
  /**
