@@ -4,7 +4,7 @@ block content
   .pb-2.mt-2.mb-4.border-bottom
     h3 Expense
 
-  form(action='/account/profile', method='POST')
+  form(action='/expense', method='POST')
     input(type='hidden', name='_csrf', value=_csrf)
     if (unknownUser)
       li.nav-item(class=(title === 'Login') ? 'active' : undefined)
@@ -28,30 +28,10 @@ block content
     .form-group.row
       label.col-md-3.col-form-label.font-weight-bold.text-right(for='name') Comment
       .col-md-7
-        input.form-control(type='text', name='name', id='name', value=user.profile.name)        
-    .form-group.row
-      label.col-md-3.col-form-label.font-weight-bold.text-right Gender
-      .col-sm-6
-        label.radio.col-sm-3
-          input(type='radio', checked=user.profile.gender=='male', name='gender', value='male', data-toggle='radio')
-          span Male
-        label.radio.col-sm-3
-          input(type='radio', checked=user.profile.gender=='female', name='gender', value='female', data-toggle='radio')
-          span Female
-        label.radio.col-sm-3
-          input(type='radio', checked=user.profile.gender=='other', name='gender', value='other', data-toggle='radio')
-          span Other
-    .form-group.row
-      label.col-md-3.col-form-label.font-weight-bold.text-right(for='location') Location
-      .col-md-7
-        input.form-control(type='text', name='location', id='location', value=user.profile.location)
-    .form-group.row
-      label.col-md-3.col-form-label.font-weight-bold.text-right(for='website') Website
-      .col-md-7
-        input.form-control(type='text', name='website', id='website', value=user.profile.website)
+        input.form-control(type='text', name='name', id='name', value=user.profile.name)
     .form-group
       .offset-sm-3.col-md-7.pl-2
         button.btn.btn.btn-primary(type='submit')
           i.fas.fa-pencil-alt.fa-sm
-          | Update Profile
+          | Create Expense
 
