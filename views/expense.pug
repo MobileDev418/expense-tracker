@@ -2,36 +2,40 @@ extends layout
 
 block content
   .pb-2.mt-2.mb-4.border-bottom
-    h3 Expense
+    .table-title
+      .row
+        .col-sm-9
+          h3
+            | Expense
+        .col-sm-1
+          button.btn.btn-info.add-new(type='button')
+            i.fa.fa-plus
+            |  Add New
 
   form(action='/expense', method='POST')
     input(type='hidden', name='_csrf', value=_csrf)
-    if (unknownUser)
-      li.nav-item(class=(title === 'Login') ? 'active' : undefined)
-        a.nav-link(href='/login') Login
-    .form-group.row
-      label.col-md-3.col-form-label.font-weight-bold.text-right(for='email') Date
-      .col-md-7
-        input.form-control(type='email', name='email', id='email', value=user.email)
-    .form-group.row
-      label.col-md-3.col-form-label.font-weight-bold.text-right(for='name') Time
-      .col-md-7
-        input.form-control(type='text', name='name', id='name', value=user.profile.name)
-    .form-group.row
-      label.col-md-3.col-form-label.font-weight-bold.text-right(for='name') Description
-      .col-md-7
-        input.form-control(type='text', name='name', id='name', value=user.profile.name)
-    .form-group.row
-      label.col-md-3.col-form-label.font-weight-bold.text-right(for='name') Amount
-      .col-md-7
-        input.form-control(type='text', name='name', id='name', value=user.profile.name)                
-    .form-group.row
-      label.col-md-3.col-form-label.font-weight-bold.text-right(for='name') Comment
-      .col-md-7
-        input.form-control(type='text', name='name', id='name', value=user.profile.name)
-    .form-group
-      .offset-sm-3.col-md-7.pl-2
-        button.btn.btn.btn-primary(type='submit')
-          i.fas.fa-pencil-alt.fa-sm
-          | Create Expense
-
+    table.table.table-bordered
+      thead
+        tr
+          th Date
+          th Time
+          th Description
+          th Amount
+          th Comment
+          th Action
+      tbody
+        each expense in expenseList
+          tr
+            td= expense.date
+            td= expense.time
+            td= expense.description
+            td= expense.amount
+            td= expense.comment
+            td
+              a.add(title='Add', data-toggle='tooltip')
+                i.material-icons &#xE03B;
+              a.edit(title='Edit', data-toggle='tooltip')
+                i.material-icons &#xE254;
+              a.delete(title='Delete', data-toggle='tooltip')
+                i.material-icons &#xE872;
+    
