@@ -1,30 +1,22 @@
-const User = require('../models/User');
 const Expense = require('../models/Expense');
 
-/**
- * GET /
- * Expense page.
- */
-exports.getExpense = (req, res) => {
-  const expenses = [];
-
+exports.index = (req, res) => {
   Expense.find({}, (err, expenseItems) => {
     if (err) throw err;
-
-    expenseItems.forEach((expenseItem) => {
-      const expense = {
-        date: expenseItem.date,
-        time: expenseItem.time,
-        description: expenseItem.description,
-        amount: expenseItem.amount,
-        comment: expenseItem.comment
-      };
-      expenses.push(expense);
-    });
-    res.render('expense', {
+    res.render('expense/index', {
       title: 'Expense',
-      expenseList: expenses
+      expenseList: expenseItems
     });
+  });
+};  
+
+/**
+ * GET /expense/add
+ * Add Expense page.
+ */
+exports.add = (req, res) => {
+  res.render('expense/addexp', {
+    title: 'Add Expense'
   });
 };
 
@@ -40,6 +32,7 @@ exports.addExpense = (req, res, next) => {
     amount: req.body.amount,
     comment: req.body.comment
   });
+  console.log('added Expense', JSON.stringify(expense));
   expense.save((err) =>{
     if(err) { return  next(err); }
     res.redirect('/expense');
@@ -47,37 +40,28 @@ exports.addExpense = (req, res, next) => {
 };
 
 /**
-* POST /expense/update
-* Update Expense Data.
+* POST /expense/edit
+* Edit Expense Data.
 */
 exports.updateExpense = (req, res, next) => {
-  req.assert('email', 'Please enter a valid email address.').isEmail();
-  req.sanitize('email').normalizeEmail({ gmail_remove_dots: false });
 
-  const errors = req.validationErrors();
-
-  if (errors) {
-    req.flash('errors', errors);
-    return res.redirect('/account');
-  }
-
-  User.findById(req.user.id, (err, user) => {
+  Expense.findById(req.expense.id, (err, expense) => {
     if (err) { return next(err); }
-    user.email = req.body.email || '';
-    user.profile.name = req.body.name || '';
-    user.profile.gender = req.body.gender || '';
-    user.profile.location = req.body.location || '';
-    user.profile.website = req.body.website || '';
-    user.save((err) => {
+    expense.date = req.body.date || '';
+    expense.time = req.body.time || '';
+    expense.description = req.body.description || '';
+    expense.amount = req.body.amount || '';
+    expense.comment = req.body.comment || '';
+    expense.save((err) => {
       if (err) {
         if (err.code === 11000) {
-          req.flash('errors', { msg: 'The email address you have entered is already associated with an account.' });
-          return res.redirect('/account');
+          req.flash('errors', { msg: 'The expense you entered cannot update'});
+          return res.redirect('/expense');
         }
         return next(err);
       }
-      req.flash('success', { msg: 'Profile information has been updated.' });
-      res.redirect('/account');
+      req.flash('success', { msg: 'Expense has been updated.' });
+      res.redirect('/expense');
     });
   });
 };
@@ -87,10 +71,11 @@ exports.updateExpense = (req, res, next) => {
 * Delete Expense Data.
 */
 exports.delExpense = (req, res, next) => {
-  User.remove({ _id: req.user.id }, (err) => {
-    if (err) { return next(err); }
-    req.logout();
-    req.flash('info', { msg: 'Expense Data has been deleted.' });
-    res.redirect('/');
-  });
+  Expense.findById(req.expense.id, (err, expense) => {
+    expense.remove({ _id: req.expense.id }, (err) => {
+      if (err) { return next(err); }
+      req.flash('info', { msg: 'Expense Data has been deleted.' });
+      res.redirect('/expense');
+    });
+  });  
 };
