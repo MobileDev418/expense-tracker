@@ -8,14 +8,6 @@ const expenseSchema = new mongoose.Schema({
   comment: String,
 }, { timestamps: true});
 
-/**
- * Password hash middleware.
- */
-expenseSchema.pre('save', function save(next) {
-  if (err) { return next(err); }
-  next();
-});
-
 const Expense = mongoose.model('Expense', expenseSchema);
 
 module.exports = Expense;
