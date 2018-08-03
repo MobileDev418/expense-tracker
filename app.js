@@ -131,13 +131,16 @@ app.get('/signup', userController.getSignup);
 app.post('/signup', userController.postSignup);
 app.get('/contact', contactController.getContact);
 app.post('/contact', contactController.postContact);
-app.get('/expense', passportConfig.isAuthenticated, expenseController.getExpense);
-app.post('/expense/edit', passportConfig.isAuthenticated, expenseController.updateExpense);
 app.get('/account', passportConfig.isAuthenticated, userController.getAccount);
 app.post('/account/profile', passportConfig.isAuthenticated, userController.postUpdateProfile);
 app.post('/account/password', passportConfig.isAuthenticated, userController.postUpdatePassword);
 app.post('/account/delete', passportConfig.isAuthenticated, userController.postDeleteAccount);
 app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userController.getOauthUnlink);
+app.get('/expense', passportConfig.isAuthenticated, expenseController.index);
+app.get('/expense/add', passportConfig.isAuthenticated, expenseController.add);
+app.post('/expense/add', passportConfig.isAuthenticated, expenseController.addExpense);
+app.post('/expense/edit', passportConfig.isAuthenticated, expenseController.updateExpense);
+app.post('/expense/del', passportConfig.isAuthenticated, expenseController.delExpense);
 /**
  * Error Handler.
  */
