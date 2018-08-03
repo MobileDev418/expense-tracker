@@ -1,6 +1,6 @@
 $(document).ready(() => {
   // Place JavaScript code here...
-  
+  /** 
   var actions = $("table td:last-child").html();
   // Append table with add row form on add new button click
   $(".add-new").click(function(){
@@ -51,4 +51,5 @@ $(document).ready(() => {
     $(this).parents("tr").remove();
     $(".add-new").removeAttr("disabled");
   });
+  */
 });
