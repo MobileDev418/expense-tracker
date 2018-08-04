@@ -38,7 +38,15 @@ exports.addExpense = (req, res, next) => {
     res.redirect('/expense');
   });
 };
-
+/**
+ * GET /expense/edit
+ * Edit Expense page.
+ */
+exports.edit = (req, res) => {
+  res.render('expense/editexp', {
+    title: 'Add Expense'
+  });
+};
 /**
 * POST /expense/edit
 * Edit Expense Data.
