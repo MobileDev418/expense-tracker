@@ -13,3 +13,8 @@ brew services start mongodb
 npm install
 npm start
 ```
+
+- nodemon (Restart JS server)
+```
+npm install nodemon
+```
