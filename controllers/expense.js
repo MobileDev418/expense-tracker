@@ -42,9 +42,14 @@ exports.addExpense = (req, res, next) => {
  * GET /expense/edit
  * Edit Expense page.
  */
-exports.edit = (req, res) => {
+exports.edit = (req, res, next) => {
+  // Expense.findById(req.expense.id, (err, expItem) => {
+  //   if (err) { return next(err); }
+  //   console.log('Expense Item', JSON.stringify(expItem));
+  // });
   res.render('expense/editexp', {
-    title: 'Add Expense'
+    title: 'Add Expense',
+    // expense: expenseList[index]
   });
 };
 /**
