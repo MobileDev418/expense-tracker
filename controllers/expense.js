@@ -25,8 +25,9 @@ exports.add = (req, res) => {
  * Add Expense Data.
  */
 exports.addExpense = (req, res, next) => {
+  console.log('date', req.body.date);
   const expense = new Expense({
-    date: req.body.date,
+    date: JSON.stringify(req.body.date),
     time: req.body.time,
     description: req.body.description,
     amount: req.body.amount,
@@ -35,6 +36,7 @@ exports.addExpense = (req, res, next) => {
   console.log('added Expense', JSON.stringify(expense));
   expense.save((err) =>{
     if(err) { return  next(err); }
+    req.flash('info', { msg: 'New expense has been added.' });
     res.redirect('/expense');
   });
 };
@@ -43,13 +45,13 @@ exports.addExpense = (req, res, next) => {
  * Edit Expense page.
  */
 exports.edit = (req, res, next) => {
-  // Expense.findById(req.expense.id, (err, expItem) => {
-  //   if (err) { return next(err); }
-  //   console.log('Expense Item', JSON.stringify(expItem));
-  // });
-  res.render('expense/editexp', {
-    title: 'Add Expense',
-    // expense: expenseList[index]
+  Expense.findOne({_id: req.params.id})
+  .exec((err, expense) => {
+    if (err) { return next(err); }
+    res.render('expense/editexp', {
+      title: 'Edit Expense',
+      expItem: expense
+    });
   });
 };
 /**
@@ -58,24 +60,17 @@ exports.edit = (req, res, next) => {
 */
 exports.updateExpense = (req, res, next) => {
 
-  Expense.findById(req.expense.id, (err, expense) => {
+  let expense = {
+    date: req.body.date,
+    time: req.body.time,
+    description: req.body.description,
+    amount: req.body.amount,
+    comment: req.body.comment
+  }
+  Expense.updateOne({_id: req.params.id}, expense, function(err){
     if (err) { return next(err); }
-    expense.date = req.body.date || '';
-    expense.time = req.body.time || '';
-    expense.description = req.body.description || '';
-    expense.amount = req.body.amount || '';
-    expense.comment = req.body.comment || '';
-    expense.save((err) => {
-      if (err) {
-        if (err.code === 11000) {
-          req.flash('errors', { msg: 'The expense you entered cannot update'});
-          return res.redirect('/expense');
-        }
-        return next(err);
-      }
-      req.flash('success', { msg: 'Expense has been updated.' });
-      res.redirect('/expense');
-    });
+    req.flash('info', { msg: 'Selected expense has been updated.' });
+    res.redirect('/expense');
   });
 };
 
@@ -84,11 +79,9 @@ exports.updateExpense = (req, res, next) => {
 * Delete Expense Data.
 */
 exports.delExpense = (req, res, next) => {
-  Expense.findById(req.expense.id, (err, expense) => {
-    expense.remove({ _id: req.expense.id }, (err) => {
-      if (err) { return next(err); }
-      req.flash('info', { msg: 'Expense Data has been deleted.' });
-      res.redirect('/expense');
-    });
+  Expense.deleteOne({ _id: req.params.id }, (err, expense) => {
+    if (err) { return next(err); }
+    req.flash('info', { msg: 'Selected expense has been deleted.' });
+    res.redirect('/expense');
   });  
 };
