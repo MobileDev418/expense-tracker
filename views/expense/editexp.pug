@@ -9,25 +9,25 @@ block content
     .form-group.row
     label(class='col-md-2 col-form-label font-weight-bold', for='date') Date
     .col-md-8
-        input.form-control(type='text', name='date', id='date', autofocus=true)
+        input.form-control(type='text', name='date', id='date', value= expItem.date, autofocus=true)
     .form-group.row
     label(class='col-md-2 col-form-label font-weight-bold', for='time') Time
     .col-md-8
-        input.form-control(type='text', name='time', id='time')
+        input.form-control(type='text', name='time', id='time', value= expItem.time)
     .form-group.row
     label(class='col-md-2 col-form-label font-weight-bold', for='description') Description
     .col-md-8
-        input.form-control(type='text', name='description', id='description')
+        input.form-control(type='text', name='description', id='description', value= expItem.description)
     .form-group.row
     label(class='col-md-2 col-form-label font-weight-bold', for='amount') Amount
     .col-md-8
-        input.form-control(type='text', name='amount', id='amount')
+        input.form-control(type='text', name='amount', id='amount', value= expItem.amount)
     .form-group.row
     label(class='col-md-2 col-form-label font-weight-bold', for='comment') Comment
     .col-md-8
-        input.form-control(type='text', name='comment', id='comment')
+        input.form-control(type='text', name='comment', id='comment', value= expItem.comment)
     p
     .form-group
       .col-md-8
-        a.btn.btn-info.add-new(type='submit')
+        button.btn-info.add-new(type='submit')
           | Edit Expense
