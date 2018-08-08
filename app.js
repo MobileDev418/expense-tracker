@@ -139,9 +139,9 @@ app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userControl
 app.get('/expense', passportConfig.isAuthenticated, expenseController.index);
 app.get('/expense/add', passportConfig.isAuthenticated, expenseController.add);
 app.post('/expense/add', passportConfig.isAuthenticated, expenseController.addExpense);
-app.get('/expense/edit', passportConfig.isAuthenticated, expenseController.edit);
-app.post('/expense/edit', passportConfig.isAuthenticated, expenseController.updateExpense);
-app.post('/expense/del', passportConfig.isAuthenticated, expenseController.delExpense);
+app.get('/expense/edit/:id', passportConfig.isAuthenticated, expenseController.edit);
+app.post('/expense/edit/:id', passportConfig.isAuthenticated, expenseController.updateExpense);
+app.get('/expense/del/:id', passportConfig.isAuthenticated, expenseController.delExpense);
 /**
  * Error Handler.
  */
