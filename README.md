@@ -1,4 +1,4 @@
-# expense-tracker
+# expense-tracker - MVC
 
 ## How to install
 
