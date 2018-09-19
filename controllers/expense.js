@@ -1,4 +1,5 @@
 const Expense = require('../models/Expense');
+const dateFormat = require('dateformat');
 
 exports.index = (req, res) => {
   Expense.find({}, (err, expenseItems) => {
@@ -48,9 +49,17 @@ exports.edit = (req, res, next) => {
   Expense.findOne({_id: req.params.id})
   .exec((err, expense) => {
     if (err) { return next(err); }
+
+    const temp = {
+      date: dateFormat(expense.date, 'mm/dd/yyyy'),
+      description: expense.description,
+      amount: expense.amount,
+      comment: expense.comment
+    }
+
     res.render('expense/editexp', {
       title: 'Edit Expense',
-      expItem: expense
+      expItem: temp
     });
   });
 };
