@@ -16,7 +16,6 @@ block content
     thead
       tr
         th Date
-        th Time
         th Description
         th Amount
         th Comment
@@ -25,15 +24,14 @@ block content
       each expense in expenseList
         tr
           td= expense.date
-          td= expense.time
           td= expense.description
           td= expense.amount
           td= expense.comment
           td
             a.add(title='Add', href='/expense/add')
               i.material-icons &#xE03B;
-            a.edit(title='Edit', href='/expense/edit')
+            a.edit(title='Edit', href='/expense/edit/'+expense.id)
               i.material-icons &#xE254;
-            a.delete(title='Delete')
+            a.delete(title='Delete', href='/expense/del/'+expense.id)
               i.material-icons &#xE872;
     
