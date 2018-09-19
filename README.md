@@ -1,4 +1,4 @@
-# expense-tracker - MVC
+# expense-tracker
 
 ## How to install
 
@@ -18,3 +18,4 @@ npm start
 ```
 npm install nodemon
 ```
+Happy Day!!!!
